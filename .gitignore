@@ -1,0 +1,105 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb_checkpoints
+
+# PyCharm
+.idea/
+
+# VS Code
+.vscode/
+
+# Data (ne pas commiter les gros fichiers)
+data/raw/*.jpg
+data/raw/*.jpeg
+data/raw/*.png
+data/raw/*.zip
+data/raw/*.tar.gz
+data/processed/*.npy
+data/processed/*.npz
+data/external/*
+
+# Models (ne pas commiter les modèles entraînés)
+models/saved_models/*.h5
+models/saved_models/*.pt
+models/saved_models/*.pth
+models/saved_models/*.pkl
+models/checkpoints/*.h5
+models/checkpoints/*.pt
+*.weights.h5
+
+# Results
+results/figures/*.png
+results/figures/*.jpg
+results/figures/*.pdf
+results/metrics/*.csv
+results/metrics/*.json
+results/logs/*.log
+results/logs/*.txt
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Environment
+.env
+.venv
+*.env
+
+# Large files
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# TensorBoard
+runs/
+logs/
+tensorboard/
+
+# Weights & Biases
+wandb/
+
+# Pytest
+.pytest_cache/
+.coverage
+htmlcov/
+
+# MyPy
+.mypy_cache/
+.dmypy.json
+dmypy.json
