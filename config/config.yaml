@@ -1,0 +1,124 @@
+# Configuration du projet COVID-19 EfficientNet Transfer Learning
+
+# Dataset
+dataset:
+  name: "covid19-image-dataset"
+  path: "data/raw/"
+  classes: ["COVID", "Normal", "Viral Pneumonia"]  # Adapter selon votre dataset
+  image_size: [224, 224]  # Taille d'entrée pour EfficientNet-B0
+  split:
+    train: 0.70
+    validation: 0.15
+    test: 0.15
+  seed: 42
+
+# Data Augmentation
+augmentation:
+  enabled: true
+  rotation_range: 20
+  width_shift_range: 0.2
+  height_shift_range: 0.2
+  horizontal_flip: true
+  vertical_flip: false
+  zoom_range: 0.2
+  brightness_range: [0.8, 1.2]
+  fill_mode: "nearest"
+
+# Model
+model:
+  architecture: "efficientnet-b0"  # Options: efficientnet-b0, efficientnet-b1, efficientnet-b3
+  pretrained: true
+  weights: "imagenet"
+  freeze_layers: 100  # Nombre de couches à geler initialement
+  
+  # Couches personnalisées
+  custom_layers:
+    global_pooling: "avg"
+    dense_units: 256
+    dropout_rate: 0.5
+    activation: "relu"
+    use_batch_norm: true
+
+# Training
+training:
+  batch_size: 32
+  epochs: 50
+  learning_rate: 0.001
+  optimizer: "adam"  # Options: adam, sgd, rmsprop, adamw
+  
+  # Pour SGD
+  momentum: 0.9
+  nesterov: true
+  
+  # Loss function
+  loss: "categorical_crossentropy"  # ou "sparse_categorical_crossentropy"
+  
+  # Metrics
+  metrics: ["accuracy", "precision", "recall"]
+  
+  # Class weights (pour gérer le déséquilibre)
+  use_class_weights: true
+  
+  # Callbacks
+  callbacks:
+    early_stopping:
+      enabled: true
+      monitor: "val_loss"
+      patience: 10
+      restore_best_weights: true
+    
+    reduce_lr:
+      enabled: true
+      monitor: "val_loss"
+      factor: 0.5
+      patience: 5
+      min_lr: 0.00001
+    
+    model_checkpoint:
+      enabled: true
+      monitor: "val_accuracy"
+      save_best_only: true
+      save_weights_only: false
+    
+    tensorboard:
+      enabled: true
+      log_dir: "results/logs/tensorboard"
+    
+    csv_logger:
+      enabled: true
+      filename: "results/logs/training_history.csv"
+
+# Fine-tuning
+fine_tuning:
+  enabled: true
+  unfreeze_from_layer: 150  # Dégeler à partir de cette couche
+  learning_rate: 0.0001  # Learning rate réduit pour fine-tuning
+  epochs: 20
+
+# Evaluation
+evaluation:
+  batch_size: 32
+  use_tta: false  # Test Time Augmentation
+  tta_steps: 5
+
+# Grad-CAM
+grad_cam:
+  enabled: true
+  layer_name: "top_conv"  # Adapter selon l'architecture
+  num_samples: 10
+
+# Paths
+paths:
+  data_raw: "data/raw/"
+  data_processed: "data/processed/"
+  models: "models/saved_models/"
+  checkpoints: "models/checkpoints/"
+  results: "results/"
+  logs: "results/logs/"
+
+# Miscellaneous
+misc:
+  verbose: 1
+  workers: 4
+  use_multiprocessing: false
+  mixed_precision: false  # FP16 pour accélérer l'entraînement (GPU compatible)
