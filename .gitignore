@@ -47,6 +47,7 @@ data/raw/*.tar.gz
 data/processed/*.npy
 data/processed/*.npz
 data/external/*
+data/raw/Covid19-dataset
 
 # Models (ne pas commiter les modèles entraînés)
 models/saved_models/*.h5
